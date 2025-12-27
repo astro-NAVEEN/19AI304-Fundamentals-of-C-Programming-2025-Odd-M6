@@ -8,7 +8,7 @@
 | Input | Output                                       |
 |-------|----------------------------------------------|
 | 1     | 101.25&nbsp;&nbsp;201.50&nbsp;&nbsp;301.75&nbsp;&nbsp;402.00&nbsp;&nbsp;502.75 |
-# Date : 
+# Date : 27-12-2025
 # Aim:
 To develop a C program using the static storage class in a function with a parameter and without a return value to display the required output.
 # Algorithm:
@@ -33,7 +33,37 @@ To develop a C program using the static storage class in a function with a param
 ### Step 8:
   Stop
 # Program:
+#include <stdio.h>
+
+void display(int n);
+
+int main()
+{
+    int input, i;
+    printf("Enter a number: "); 
+
+    scanf("%d", &input);
+
+    for(i = 0; i < 5; i++)
+        display(input);
+
+    return 0;
+}
+
+void display(int n)
+{
+    static float base = 100.25;
+    printf("%.2f ", base + n);
+    base = base + 100.25;
+}
+
 # Output:
+
+
+<img width="444" height="270" alt="Screenshot 2025-12-27 194541" src="https://github.com/user-attachments/assets/bf9a4b74-6554-49c0-847a-e9d1c2de5d52" />
+
+
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -42,7 +72,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:27
   Implement a C program to perform arithmetic operations (addition, subtraction, multiplication, division) on two integers using function pointers. The user should input two numbers and select the desired operation from a menu.
-# Date : 
+# Date : 27-12-2025
 # Aim:
   To implement a C program that uses function pointers to perform arithmetic operations (add, subtract, multiply, divide) on two integers based on user choice.
 # Algorithm:
@@ -79,7 +109,73 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 11:
   Stop
 # Program:
+#include <stdio.h>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int subtract(int a, int b)
+{
+    return a - b;
+}
+
+int multiply(int a, int b)
+{
+    return a * b;
+}
+
+int divide(int a, int b)
+{
+    return a / b;
+}
+
+int main()
+{
+    int num1, num2, choice, result;
+    int (*operation)(int, int);
+
+    scanf("%d %d", &num1, &num2);
+
+    printf("1.Add\n2.Subtract\n3.Multiply\n4.Divide\n");
+    scanf("%d", &choice);
+
+    switch(choice)
+    {
+        case 1:
+            operation = add;
+            break;
+        case 2:
+            operation = subtract;
+            break;
+        case 3:
+            operation = multiply;
+            break;
+        case 4:
+            if(num2 == 0)
+            {
+                printf("Division by zero not allowed");
+                return 0;
+            }
+            operation = divide;
+            break;
+        default:
+            printf("Invalid choice");
+            return 0;
+    }
+
+    result = operation(num1, num2);
+    printf("Result = %d", result);
+
+    return 0;
+}
+
 # Output:
+
+
+<img width="402" height="442" alt="Screenshot 2025-12-27 194734" src="https://github.com/user-attachments/assets/079aade6-d3c8-4e90-a938-693396164b02" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -87,7 +183,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:28
   Develop a C program to store details of n employees (employee number, name, and salary) using structures, and display the employee(s) with the highest salary.
-# Date : 
+# Date : 27-12-2025
 # Aim:
   To develop and implement a C program that uses a structure to store employee details (employee number, name, and salary) and determine the employee(s) with the highest salary.
 # Algorithm:
@@ -123,7 +219,56 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+#include <stdio.h>
+
+struct employee
+{
+    int eno;
+    char ename[50];
+    float salary;
+};
+
+int main()
+{
+    struct employee e[100];
+    int n, i;
+    float high;
+
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &e[i].eno);
+        scanf(" %[^\n]", e[i].ename);
+        scanf("%f", &e[i].salary);
+    }
+
+    high = e[0].salary;
+
+    for(i = 1; i < n; i++)
+    {
+        if(e[i].salary > high)
+            high = e[i].salary;
+    }
+
+    printf("Employee(s) with highest salary:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        if(e[i].salary == high)
+            printf("%d %s %.2f\n", e[i].eno, e[i].ename, e[i].salary);
+    }
+
+    return 0;
+}
+
 # Output:
+
+
+
+<img width="563" height="648" alt="Screenshot 2025-12-27 195457" src="https://github.com/user-attachments/assets/382bd86e-5826-4187-a2e6-08b796835253" />
+
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -132,7 +277,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:29
   Create the C program to calculate the present age of a person by passing structure as a reference.
-# Date : 
+# Date : 27-12-2025
 # Aim:
   To create a C program that uses a structure to store the current date and birth date, and to calculate the person’s present age in years, months, and days by passing the structure as a reference.
 # Algorithm:
@@ -166,7 +311,59 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9:
   Stop
 # Program:
+#include <stdio.h>
+
+struct date
+{
+    int c_date, c_month, c_year;
+    int b_date, b_month, b_year;
+    int cal_date, cal_month, cal_year;
+};
+
+void findAge(struct date *d)
+{
+    int month[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+
+    if(d->b_date > d->c_date)
+    {
+        d->c_date += month[d->c_month - 1];
+        d->c_month -= 1;
+    }
+
+    if(d->b_month > d->c_month)
+    {
+        d->c_year -= 1;
+        d->c_month += 12;
+    }
+
+    d->cal_date = d->c_date - d->b_date;
+    d->cal_month = d->c_month - d->b_month;
+    d->cal_year = d->c_year - d->b_year;
+}
+
+int main()
+{
+    struct date d;
+
+    printf("Enter current date (DD MM YYYY): ");
+    scanf("%d %d %d", &d.c_date, &d.c_month, &d.c_year);
+
+    printf("Enter birth date (DD MM YYYY): ");
+    scanf("%d %d %d", &d.b_date, &d.b_month, &d.b_year);
+
+    findAge(&d);
+
+    printf("Present age is %d years, %d months, and %d days\n", d.cal_year, d.cal_month, d.cal_date);
+
+    return 0;
+}
+
 # Output:
+
+
+<img width="550" height="403" alt="Screenshot 2025-12-27 201552" src="https://github.com/user-attachments/assets/a979f6a5-730c-48f7-b45a-ccb493e6e261" />
+
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -175,7 +372,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-6- Module 6 - FoC
 # Ex.No:30
   Build a C program to demonstrate the use of a pointer to a union. Store an integer value in a union, access it using a union pointer, and display it as both an integer and a character.
-# Date : 
+# Date : 27-12-2025
 # Aim:
   To build a program in C that uses a pointer to a union to store an integer value and display it in both integer and character format.
 # Algorithm:
@@ -202,7 +399,35 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+#include <stdio.h>
+
+union abc
+{
+    int a;
+    char b;
+};
+
+int main()
+{
+    union abc var;
+    union abc *ptr;
+
+    ptr = &var;
+    var.a = 90;
+
+    printf("Value as integer: %d\n", ptr->a);
+    printf("Value as character: %c\n", ptr->b);
+
+    return 0;
+}
+
 # Output:
+
+
+
+<img width="512" height="418" alt="Screenshot 2025-12-27 201705" src="https://github.com/user-attachments/assets/6cb2f654-3bce-46fd-81d5-3b848427c7c1" />
+
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
